@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = "py-fy",      
-    version = "2.0.3",  
+    version = "2.0.4",  
     keywords = ("pip", "py-fy","translate", "fy"),
     description = "An Word-translation software stranslate between simple-Chinese and English",
     long_description = "An Word-translation software translate between simple-Chinese and English",
@@ -16,7 +16,7 @@ setup(
     packages = find_packages(),
     include_package_data = True,
     platforms = "any",
-    install_requires = ["pymouse", "pyinstaller"],          
+    install_requires = ["pymouse", "pyinstaller", "requests"],          
     python_requires=">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*",
     classifiers=[
         'Intended Audience :: Developers',
