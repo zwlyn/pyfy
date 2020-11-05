@@ -22,7 +22,7 @@ pip install py-fy
 进入site-packages的py-fy的文件夹
 ```
 python fy.py -install
-111
+```
 
 安装成功后：
 1.使用方法一，命令行翻译工具
