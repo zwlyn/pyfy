@@ -14,6 +14,22 @@ import os
 import sys
 import codecs
 
+
+LOGO = '''
+                                   .-.                
+                                  /    \              
+   .-..    ___  ___               | .`. ;   ___  ___  
+  /    \  (   )(   )              | |(___) (   )(   ) 
+ ' .-,  ;  | |  | |    .------.   | |_      | |  | |  
+ | |  . |  | |  | |   (________) (   __)    | |  | |  
+ | |  | |  | '  | |               | |       | '  | |  
+ | |  | |  '  `-' |               | |       '  `-' |  
+ | |  ' |   `.__. |               | |        `.__. |  
+ | `-'  '   ___ | |               | |        ___ | |  
+ | \__.'   (   )' |              (___)      (   )' |  
+ | |        ; `-' '                          ; `-' '  
+(___)        .__.'                            .__.'   
+'''
 currentData='' 
 ScriptsPath = os.path.sep.join([sys.base_prefix, "Scripts"])
 
@@ -108,46 +124,53 @@ def isValid(inputline, result):
 
 
 
-def record_translate(recordFile, inputline, result):
-    # 处理 中文输入和英文输入两种情况
-    English, Chinese = (inputline, result) if isEnglish(inputline) is True else (result, inputline)
-    if isValid(English, Chinese) is True:
-        if os.path.exists(recordFile):
-            with codecs.open(recordFile, 'r', encoding='utf-8') as f:
-                recordDict = json.loads(f.read())
-                recordDict.update({English: Chinese})
-                with codecs.open(recordFile, 'w', encoding='utf-8') as f:
-                    f.write(json.dumps(recordDict, indent=4, ensure_ascii=False)) # ensure_ascii=False 使得中文不是乱码
-        else:
-            recordDict = {}
-            recordDict.update({English: Chinese})
-            with codecs.open(recordFile, 'w', encoding='utf-8') as f:
-                f.write(json.dumps(recordDict, indent=4, ensure_ascii=False))
+# def record_translate(recordFile, inputline, result):
+#     # 处理 中文输入和英文输入两种情况
+#     English, Chinese = (inputline, result) if isEnglish(inputline) is True else (result, inputline)
+#     if isValid(English, Chinese) is True:
+#         if os.path.exists(recordFile):
+#             with codecs.open(recordFile, 'r', encoding='utf-8') as f:
+#                 recordDict = json.loads(f.read())
+#                 recordDict.update({English: Chinese})
+#                 with codecs.open(recordFile, 'w', encoding='utf-8') as f:
+#                     f.write(json.dumps(recordDict, indent=4, ensure_ascii=False)) # ensure_ascii=False 使得中文不是乱码
+#         else:
+#             recordDict = {}
+#             recordDict.update({English: Chinese})
+#             with codecs.open(recordFile, 'w', encoding='utf-8') as f:
+#                 f.write(json.dumps(recordDict, indent=4, ensure_ascii=False))
 
 
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
-        if sys.argv[1] == "install":
-            print("start")
+        if sys.argv[1] == "-install":
+            print("start install py-fy")
             fileName = os.path.basename(sys.argv[0])
             os.system("pyinstaller -F %s" % fileName)
             import shutil
             exeName = fileName.split(".")[0] + ".exe"
             shutil.copyfile(os.sep.join(['dist', exeName]), os.sep.join([ScriptsPath, exeName]))
-            print("finish")
+            print("install py-fy successful!")
+        else:
+            inputList = sys.argv[1:]
+            inputLine = ' '.join(inputList)
+            result = youdao_translate(inputLine)
+            # print(result)
+            #record_translate(RecordFile, inputLine, result)
     else:
+        print(LOGO)
         currentData = ""
         while 1:
             if currentData != getCopyText():
                 currentData = getCopyText()
-                print("==========", currentData, "=========")
+                # print("==========", currentData, "=========")
 
-                dirname = os.path.dirname(sys.argv[0])
-                RecordFile = os.sep.join([dirname, "record.json"])
+                # dirname = os.path.dirname(sys.argv[0])
+                # RecordFile = os.sep.join([dirname, "record.json"])
                 inputLine = currentData
                 result = youdao_translate(inputLine)
-                print("=============result: ", result)
+                # print("=============result: ", result)
                 # record_translate(RecordFile, inputLine, result)
 
                 position=transMousePosition()#取得当前鼠标位置
