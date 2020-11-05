@@ -1,0 +1,8 @@
+setup.py
+pyfy/__init__.py
+pyfy/pyfy.py
+pyfy.egg-info/PKG-INFO
+pyfy.egg-info/SOURCES.txt
+pyfy.egg-info/dependency_links.txt
+pyfy.egg-info/requires.txt
+pyfy.egg-info/top_level.txt
